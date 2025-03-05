@@ -7,13 +7,6 @@ import (
 	"strings"
 )
 
-func cleanInput(text string) []string {
-	var words []string
-	text = strings.ToLower(text)
-	words = strings.Fields(text)
-	return words
-}
-
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -24,6 +17,44 @@ func startRepl() {
 		if len(userInputWords) == 0 {
 			continue
 		}
-		fmt.Printf("Your command was: %v\n", userInputWords[0])
+		command, exists := getCommands()[userInputWords[0]]
+		// If the key exists
+		if exists {
+			err := command.callback()
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		} else {
+			fmt.Println("unknown command")
+		}
+	}
+}
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func() error
+}
+
+func cleanInput(text string) []string {
+	var words []string
+	text = strings.ToLower(text)
+	words = strings.Fields(text)
+	return words
+}
+
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
 	}
 }
