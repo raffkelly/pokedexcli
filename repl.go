@@ -13,8 +13,8 @@ import (
 func startRepl(c *pokecache.Cache) {
 	scanner := bufio.NewScanner(os.Stdin)
 	config := pokeapi.GetConfig()
-	param := ""
 	for {
+		param := ""
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		userInputString := scanner.Text()
@@ -82,6 +82,11 @@ func getCommands() map[string]cliCommand {
 			name:        "catch",
 			description: "Attempt to catch a pokemon",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "inspect the details of a pokemon in your pokedex",
+			callback:    commandInspect,
 		},
 	}
 }

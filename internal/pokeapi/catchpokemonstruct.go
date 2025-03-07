@@ -4,6 +4,7 @@ type CatchPokemonData struct {
 	BaseExperience int    `json:"base_experience"`
 	Height         int    `json:"height"`
 	Name           string `json:"name"`
+	Weight         int    `json:"weight"`
 	Stats          []struct {
 		BaseStat int `json:"base_stat"`
 		Stat     struct {

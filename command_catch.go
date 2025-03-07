@@ -28,6 +28,7 @@ func commandCatch(config *pokeapi.Config, c *pokecache.Cache, param string) erro
 		return nil
 	}
 	fmt.Printf("%v was caught!\n", result.Name)
+	fmt.Println("You may not inspect it with the inspect command.")
 	pokedex[result.Name] = result
 	return nil
 }
